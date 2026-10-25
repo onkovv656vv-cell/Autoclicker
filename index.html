@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Clicker Hub - Fast & Safe</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* Неоновый фон: синий и зеленый */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.1), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(74, 222, 128, 0.1), transparent 25%);
+        }
+
+        /* --- ШАПКА САЙТА --- */
+        .top-header {
+            width: 100%;
+            padding: 15px 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #00f2fe, #4ade80); /* Синий в зеленый */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        /* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
+        .container {
+            background: rgba(20, 20, 25, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 25px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.05);
+            max-width: 450px;
+            width: 90%;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #333;
+            gap: 10px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #888;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .tab-btn:hover { color: #fff; }
+        .tab-btn.active {
+            color: #00f2fe; /* Голубой акцент */
+            border-bottom: 3px solid #00f2fe;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        p { color: #aaa; font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+
+        /* Карточки */
+        .cheat-card {
+            background: rgba(30, 30, 40, 0.9);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .cheat-card:hover {
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+        .cheat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cheat-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+        .status-badge {
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .status-working { background: rgba(74, 222, 128, 0.2); color: #4ade80; border: 1px solid #4ade80; }
+        .status-updating { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+        
+        .cheat-desc {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        /* Кнопки скачивания */
+        .btn-download {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-align: center;
+            box-sizing: border-box;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Голубая кнопка (ПК) */
+        .btn-cyan { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+        .btn-cyan:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.5); transform: translateY(-2px); }
+
+        /* Зеленая кнопка (Android) */
+        .btn-green { background: linear-gradient(90deg, #10b981, #4ade80); }
+        .btn-green:hover { box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); transform: translateY(-2px); }
+
+        /* Списки в гайде */
+        ul { text-align: left; color: #aaa; font-size: 14px; line-height: 1.6; padding-left: 20px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        li strong { color: #00f2fe; }
+
+        /* Блок FAQ */
+        .faq-item {
+            background: #1a1a22;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            text-align: left;
+            border-left: 3px solid #4ade80;
+        }
+        .faq-item strong { color: #4ade80; display: block; margin-bottom: 5px; }
+        .faq-item span { color: #aaa; font-size: 13px; }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            color: #555;
+            border-top: 1px solid #222;
+            padding-top: 15px;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header class="top-header">
+        <div class="logo">Auto Clicker Hub</div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'downloads')">Скачать</button>
+            <button class="tab-btn" onclick="openTab(event, 'guide')">Гайд</button>
+            <button class="tab-btn" onclick="openTab(event, 'faq')">FAQ</button>
+        </div>
+
+        <!-- ВКЛАДКА 1: СКАЧАТЬ -->
+        <div id="downloads" class="tab-content active">
+            <p>Лучшие и безопасные автокликеры для ПК и телефонов.</p>
+
+            <!-- OP Auto Clicker (ПК) -->
+            <div class="cheat-card">
+                <div class="cheat-header">
+                    <h3 class="cheat-title">OP Auto Clicker (PC)</h3>
+                    <span class="status-badge status-working">Windows</span>
+                </div>
+                <p class="cheat-desc">Золотой стандарт для ПК. Позволяет задавать точную скорость кликов, горячие клавиши и кликать в нескольких точках.</p>
+                <a href="https://sourceforge.net/projects/orphamielautoclicker/files/latest/download" download="OPAutoClicker.exe" class="btn-download btn-cyan">
+                    Скачать для ПК (.exe)
+                </a>
+            </div>
+
+            <!-- OP Auto Clicker (Android) -->
+            <div class="cheat-card">
+                <div class="cheat-header">
+                    <h3 class="cheat-title">OP Auto Clicker (Mobile)</h3>
+                    <span class="status-badge status-working">Android</span>
+                </div>
+                <p class="cheat-desc">Мощный автокликер для телефона. Версия 2.0.0. Поддерживает клики в нескольких точках одновременно.</p>
+                <a href="https://d.apkpure.com/b/XAPK/com.opautoclicker.autoclicker?versionCode=32" download="OPAutoClicker.apk" class="btn-download btn-green">
+                    Скачать APK
+                </a>
+            </div>
+
+            <!-- Специально для Roblox -->
+            <div class="cheat-card">
+                <div class="cheat-header">
+                    <h3 class="cheat-title">Roblox Fast Clicker</h3>
+                    <span class="status-badge status-updating">В разработке</span>
+                </div>
+                <p class="cheat-desc">Специализированный кликер для фарма в Роблоксе. Автоматически кликает по нужным кнопкам в популярных симуляторах.</p>
+                <a href="#" class="btn-download" style="background: #333; color: #888; pointer-events: none;">
+                    Скоро
+                </a>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА 2: ГАЙД -->
+        <div id="guide" class="tab-content">
+            <p>Как настроить идеальный кликер:</p>
+            <ul>
+                <li><strong>1. CPS (Clicks Per Second):</strong> Это количество кликов в секунду. Не ставь больше 15-20, если играешь в онлайн-играх, иначе сервер тебя забанит за читерство.</li>
+                <li><strong>2. Горячие клавиши:</strong> В настройках программы назначь кнопку (например, F6), чтобы включать и выключать кликер, не сворачивая игру.</li>
+                <li><strong>3. Задержка (Delay):</strong> Добавь случайную задержку между кликами (например, от 10 до 50 мс). Это имитирует человеческие клики, и античиты не смогут тебя спалить.</li>
+                <li><strong>4. Интервал:</strong> Для мобильных версий настрой плавающую кнопку, чтобы она не мешала обзору.</li>
+            </ul>
+        </div>
+
+        <!-- ВКЛАДКА 3: FAQ -->
+        <div id="faq" class="tab-content">
+            <div class="faq-item">
+                <strong>Это безопасно?</strong>
+                <span>Да, обычные автокликеры — это просто программы, которые эмулируют нажатия мыши. Они не взламывают игры. Но в онлайн-играх (Roblox, CS2) за них могут дать бан, если античит заметит слишком ровные интервалы.</span>
+            </div>
+            <div class="faq-item">
+                <strong>Почему вылетает антивирус?</strong>
+                <span>Некоторые антивирусы (особенно Windows Defender) ругаются на кликеры, так как они перехватывают управление мышью. Добавь файл в исключения.</span>
+            </div>
+            <div class="faq-item">
+                <strong>Какой кликер лучше?</strong>
+                <span>Для ПК — OP Auto Clicker. Для Android — OP Auto Clicker Mobile (ссылка выше) или GS Auto Clicker.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 Auto Clicker Hub. Сделано для новичков.</p>
+        <p>Мы не affiliated с Roblox Corporation.</p>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+      </html>
